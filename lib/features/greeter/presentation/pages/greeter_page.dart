@@ -1,6 +1,9 @@
-import 'package:clean_architecture_template/core/router/router.gr.dart';
-import 'package:clean_architecture_template/injection.dart';
+import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../../../core/router/router.gr.dart';
+import '../../../../core/router/router.gr.dart';
 
 class GreeterPage extends StatelessWidget {
   @override
@@ -12,11 +15,11 @@ class GreeterPage extends StatelessWidget {
           children: [
             Text(
               'WELCOME TO THE APP',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline5,
             ),
             TextButton(
               onPressed: () {
-                AppRouter().push(HomeRoute());
+                context.router.replace(HomeRoute());
               },
               child: Text(
                 'Continue',

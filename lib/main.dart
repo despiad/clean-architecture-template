@@ -16,15 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Clean Architecture Template',
-      routerDelegate: AutoRouterDelegate.declarative(
-        _appRouter,
-        routes: (context) {
-          return [
-            GreeterRoute(),
-          ];
-        },
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        accentColor: Colors.amber,
       ),
+      title: 'Clean Architecture Template',
+      routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
       builder: (_, router) => router!,
     );

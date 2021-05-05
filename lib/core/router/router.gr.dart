@@ -40,7 +40,7 @@ class AppRouter extends _i1.RootStackRouter {
   @override
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(GreeterRoute.name, path: '/'),
-        _i1.RouteConfig(HomeRoute.name, path: '/home-page', children: [
+        _i1.RouteConfig(HomeRoute.name, path: '/', children: [
           _i1.RouteConfig(CounterRoute.name, path: 'counter-page'),
           _i1.RouteConfig(NicknameGeneratorRoute.name,
               path: 'nickname-generator-page')
@@ -56,7 +56,7 @@ class GreeterRoute extends _i1.PageRouteInfo {
 
 class HomeRoute extends _i1.PageRouteInfo {
   const HomeRoute({List<_i1.PageRouteInfo>? children})
-      : super(name, path: '/home-page', children: children);
+      : super(name, path: '/', children: children);
 
   static const String name = 'HomeRoute';
 }

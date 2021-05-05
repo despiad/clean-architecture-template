@@ -8,10 +8,10 @@ import 'package:injectable/injectable.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(initial: true, page: GreeterPage),
+    AutoRoute(path: '/', page: GreeterPage),
     AutoRoute(
       page: HomePage,
-      maintainState: true,
+      initial: true,
       children: [
         AutoRoute(page: CounterPage),
         AutoRoute(page: NicknameGeneratorPage),
