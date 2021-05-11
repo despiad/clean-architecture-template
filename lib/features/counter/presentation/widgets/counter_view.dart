@@ -14,37 +14,40 @@ class CounterView extends StatelessWidget {
         appBar: AppBar(
           title: Text('COUNTER'),
         ),
-        body: BlocConsumer<CounterBloc, CounterState>(
-          listener: (blocContext, state) {
-            if (state is CounterErrorState) {
-              _scaffoldMessengerKey.currentState!
-                  .showSnackBar(SnackBar(content: Text(state.message)));
-            }
-          },
-          builder: (blocContext, state) {
-            if (state is CounterLoadingState) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is CounterChangedState) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Current counter value:',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    Text(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<CounterBloc, CounterState>(
+                buildWhen: (previous, current) =>
+                    current is CounterChangedState,
+                builder: (context, state) {
+                  if(state is CounterChangedState)
+                  return _container(
+                      state.value % 3 == 0);
+                  return Container();
+                },
+              ),
+              _text(context),
+              BlocConsumer<CounterBloc, CounterState>(
+                listener: (blocContext, state) {
+                  if (state is CounterErrorState) {
+                    _scaffoldMessengerKey.currentState!
+                        .showSnackBar(SnackBar(content: Text(state.message)));
+                  }
+                },
+                builder: (blocContext, state) {
+                  if (state is CounterChangedState)
+                    return Text(
                       '${state.value}',
                       style: Theme.of(context).textTheme.headline1,
-                    )
-                  ],
-                ),
-              );
-            }
-            return Container();
-          },
+                    );
+                  else
+                    return CircularProgressIndicator();
+                },
+              ),
+            ],
+          ),
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -69,6 +72,23 @@ class CounterView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  _text(context) {
+    print('text build');
+    return Text(
+      'Current counter value:',
+      style: Theme.of(context).textTheme.headline5,
+    );
+  }
+
+  _container(bool isDividedByThree) {
+    print('container build');
+    return Container(
+      height: 100,
+      width: 100,
+      color: isDividedByThree ? Colors.red : Colors.blue,
     );
   }
 }

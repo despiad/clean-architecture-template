@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:clean_architecture_template/core/error/exceptions.dart';
 import 'package:clean_architecture_template/core/usecases/usecase.dart';
 import 'package:clean_architecture_template/features/counter/domain/usecases/get_counter_value_use_case.dart';
 import 'package:clean_architecture_template/features/counter/domain/usecases/save_counter_value_use_case.dart';
@@ -20,7 +19,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   final SaveCounterValueUseCase _saveCounterValueUseCase;
 
   CounterBloc(this._saveCounterValueUseCase, this._getCounterUseCase)
-      : super(CounterLoadingState());
+      : super(CounterInitialState());
 
   @override
   Stream<CounterState> mapEventToState(
@@ -36,6 +35,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
   Stream<CounterState> _mapFetchCounterEventToState(
       FetchCounterEvent event) async* {
+    await Future.delayed(Duration(seconds: 3));
     final value = await _getCounterUseCase.call(NoParams());
     yield value.fold(
       (l) => CounterChangedState(0),
